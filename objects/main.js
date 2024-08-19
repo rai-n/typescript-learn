@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getName = {
+const getName = {
     name: "Neer",
     surname: "Rai",
     animal: {
@@ -9,5 +9,5 @@ var getName = {
         type: "Dog".toLowerCase(),
     },
 };
-var greet = "Hey ".concat(getName.name, ", hows your ").concat(getName.animal.age, " year old ").concat(getName.animal.type, " ").concat(getName.animal.name, " doing?");
+const greet = `Hey ${getName.name}, hows your ${getName.animal.age} year old ${getName.animal.type} ${getName.animal.name} doing?`;
 console.log(greet);

@@ -1,7 +1,8 @@
-var likes = ["pizza", "dumpling"];
-var person = {
+"use strict";
+const likes = ["pizza", "dumpling"];
+const person = {
     name: "Neer",
     likes: likes,
     rating: [3, "Great"],
 };
-console.log("".concat(person.name, " likes ").concat(person.likes.join(" and "), ". ").concat(person.rating[0], "/5. ").concat(person.rating[1], "!"));
+console.log(`${person.name} likes ${person.likes.join(" and ")}. ${person.rating[0]}/5. ${person.rating[1]}!`);
