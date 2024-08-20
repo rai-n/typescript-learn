@@ -16,7 +16,7 @@ var __extends = (this && this.__extends) || (function () {
 var Department = /** @class */ (function () {
     function Department(name) {
         var _this = this;
-        this.name = "DFLT";
+        this.name = name;
         this.employeesIds = [];
         this.addEmployee = function (employeeId) { return _this.employeesIds.push(employeeId); };
         this.departmentSize = function () { return _this.employeesIds.length; };
@@ -43,30 +43,31 @@ engineering.addEmployee(2);
 engineering.addEmployee(3);
 engineering.allEmployees();
 console.log(engineering.departmentSize());
-var DepartmentShortCut = /** @class */ (function () {
-    // readonly for typesafety
-    function DepartmentShortCut(name, departmentId) {
-        this.name = name;
-        this.departmentId = departmentId;
-    }
-    DepartmentShortCut.prototype.describe = function () {
-        console.log("Department: ".concat(this.name, ": ").concat(this.departmentId));
-    };
-    return DepartmentShortCut;
-}());
-var accountingShortCut = new DepartmentShortCut("accounting", 2);
-accountingShortCut.describe();
+// class DepartmentShortCut  {
+//     describe(){
+//         console.log(`Department: ${this.name}: ${this.departmentId}`)
+//     }
+//     // readonly for typesafety
+//     constructor(private name: string, private departmentId: number){
+//         super(name = "Shortcut", departmentId = 2)
+//     }
+// }
+// const accountingShortCut = new DepartmentShortCut("accounting", 2)
+// accountingShortCut.describe()
 var FinanceDepartment = /** @class */ (function (_super) {
     __extends(FinanceDepartment, _super);
-    function FinanceDepartment() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function FinanceDepartment(name, departmentId) {
+        return _super.call(this, name) || this;
     }
+    FinanceDepartment.prototype.describe = function () {
+        console.log('Accounting department - name: ' + this.name);
+    };
     FinanceDepartment.prototype.generateReport = function () {
         console.log("Generating report...");
     };
     return FinanceDepartment;
 }(Department));
-var financeDepartment = new FinanceDepartment("Finance");
+var financeDepartment = new FinanceDepartment("Finance", 2);
 financeDepartment.generateReport();
 var ITDepartment = /** @class */ (function (_super) {
     __extends(ITDepartment, _super);
@@ -119,3 +120,4 @@ itDepartment.registerDevice = 1;
 itDepartment.registerDevice = 4;
 console.log(itDepartment.findDevices);
 console.log("Finance budget: " + ITDepartment.getDepartmentBudget(itDepartment.findAdmins.length));
+financeDepartment.describe();

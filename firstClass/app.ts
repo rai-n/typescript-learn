@@ -1,23 +1,36 @@
-class Department {
-    private name: string = "DFLT";
+abstract class Department {
     private employeesIds: number[] = []
 
-    constructor (name: string){
+    constructor (public name: string){
         this.name = name
     }
     // catch unwanted behaviors
-    describe(this : Department){
-        console.log("Department: " + this.name)
-    }
+    abstract describe(this : Department) : void;
+    // describe(){
+    //     console.log(`Department: ${this.name}: ${this.departmentId}`)
+    // }
 
     public addEmployee = (employeeId : number) => this.employeesIds.push(employeeId)
     public departmentSize = () => this.employeesIds.length
     public allEmployees = () => this.employeesIds.forEach(id => console.log(id)) 
 }
 
-const engineering = new Department("Engineering")
-const accounting = new Department("Accounting")
-const dflt = new Department("")
+class ITDepartment extends Department{
+    admins: string[]
+    constructor(name: string, admins: string[]){
+        super(name)
+        this.admins = admins
+    }
+    // enforcing classes share common methods using abstract method 
+    // but different implementation
+    describe(this: Department): void {
+        console.log('Department id: ' + this.name)
+    }
+}
+
+// const engineering = new Department("Engineering")
+// const accounting = new Department("Accounting")
+// const dflt = new Department("")
 
 
 // console.log(engineering, accounting, dflt)
@@ -39,30 +52,39 @@ console.log(engineering.departmentSize())
 
  
 
-class DepartmentShortCut {
-    describe(){
-        console.log(`Department: ${this.name}: ${this.departmentId}`)
-    }
-    // readonly for typesafety
-    constructor(private readonly name: string, private departmentId: number){
-    }
-}
-
-const accountingShortCut = new DepartmentShortCut("accounting", 2)
-accountingShortCut.describe()
+// class DepartmentShortCut  {
+//     describe(){
+//         console.log(`Department: ${this.name}: ${this.departmentId}`)
+//     }
+//     // readonly for typesafety
+//     constructor(private name: string, private departmentId: number){
+//         super(name = "Shortcut", departmentId = 2)
+//     }
+// }
+// const accountingShortCut = new DepartmentShortCut("accounting", 2)
+// accountingShortCut.describe()
 
 
 class FinanceDepartment extends Department{
+    
+    constructor(name: string, departmentId: number){
+        super(name)
+    }
+    
+
+    describe(): void {
+      console.log('Accounting department - name: '+this.name)  
+    }
 
     public generateReport(){
         console.log("Generating report...")
     }
 }
 
-const financeDepartment = new FinanceDepartment("Finance");
+const financeDepartment = new FinanceDepartment("Finance", 2);
 financeDepartment.generateReport()
 
-class ITDepartment extends Department{
+class ITDepartment2 extends Department{
 
     static salary = 1000
 
@@ -97,11 +119,11 @@ class ITDepartment extends Department{
     }
 
     static getDepartmentBudget(staffAmt: number){
-        return ITDepartment.salary * staffAmt
+        return ITDepartment2.salary * staffAmt
     }
 }
 
-const itDepartment = new ITDepartment("IT", ["admin1", "admin2"])
+const itDepartment = new ITDepartment2("IT", ["admin1", "admin2"])
 itDepartment.addAdmins("admin3")
 console.log(itDepartment.findAdmins)
 
@@ -110,3 +132,5 @@ itDepartment.registerDevice = 4
 console.log(itDepartment.findDevices)
 
 console.log("Finance budget: "+ ITDepartment.getDepartmentBudget(itDepartment.findAdmins.length))
+
+financeDepartment.describe()
