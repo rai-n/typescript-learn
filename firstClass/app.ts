@@ -1,4 +1,4 @@
-abstract class Department {
+export abstract class Department {
     private employeesIds: number[] = []
 
     constructor (public name: string){
@@ -35,20 +35,20 @@ class ITDepartment extends Department{
 
 // console.log(engineering, accounting, dflt)
 
-engineering.describe()
+// engineering.describe()
 
-const engineeringCopy =  engineering.describe()
+// const engineeringCopy =  engineering.describe()
 
 // avoid undefined
 // const engineeringCopyThis =  {name: "CopyDepartment", describe : engineering.describe}
 // engineeringCopyThis.describe()
 
-engineering.addEmployee(1)
-engineering.addEmployee(2)
-engineering.addEmployee(3)
+// engineering.addEmployee(1)
+// engineering.addEmployee(2)
+// engineering.addEmployee(3)
 
-engineering.allEmployees()
-console.log(engineering.departmentSize()) 
+// engineering.allEmployees()
+// console.log(engineering.departmentSize()) 
 
  
 
@@ -85,6 +85,10 @@ const financeDepartment = new FinanceDepartment("Finance", 2);
 financeDepartment.generateReport()
 
 class ITDepartment2 extends Department{
+
+    describe(this: Department): void {
+        console.log("Department2 IT")
+    }
 
     static salary = 1000
 
@@ -131,6 +135,6 @@ itDepartment.registerDevice = 1
 itDepartment.registerDevice = 4
 console.log(itDepartment.findDevices)
 
-console.log("Finance budget: "+ ITDepartment.getDepartmentBudget(itDepartment.findAdmins.length))
+// console.log("Finance budget: "+ ITDepartment.getDepartmentBudget(itDepartment.findAdmins.length))
 
 financeDepartment.describe()

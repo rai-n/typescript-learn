@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -13,36 +14,52 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Department = void 0;
 var Department = /** @class */ (function () {
     function Department(name) {
         var _this = this;
         this.name = name;
         this.employeesIds = [];
+        // describe(){
+        //     console.log(`Department: ${this.name}: ${this.departmentId}`)
+        // }
         this.addEmployee = function (employeeId) { return _this.employeesIds.push(employeeId); };
         this.departmentSize = function () { return _this.employeesIds.length; };
         this.allEmployees = function () { return _this.employeesIds.forEach(function (id) { return console.log(id); }); };
         this.name = name;
     }
-    // catch unwanted behaviors
-    Department.prototype.describe = function () {
-        console.log("Department: " + this.name);
-    };
     return Department;
 }());
-var engineering = new Department("Engineering");
-var accounting = new Department("Accounting");
-var dflt = new Department("");
+exports.Department = Department;
+var ITDepartment = /** @class */ (function (_super) {
+    __extends(ITDepartment, _super);
+    function ITDepartment(name, admins) {
+        var _this = _super.call(this, name) || this;
+        _this.admins = admins;
+        return _this;
+    }
+    // enforcing classes share common methods using abstract method 
+    // but different implementation
+    ITDepartment.prototype.describe = function () {
+        console.log('Department id: ' + this.name);
+    };
+    return ITDepartment;
+}(Department));
+// const engineering = new Department("Engineering")
+// const accounting = new Department("Accounting")
+// const dflt = new Department("")
 // console.log(engineering, accounting, dflt)
-engineering.describe();
-var engineeringCopy = engineering.describe();
+// engineering.describe()
+// const engineeringCopy =  engineering.describe()
 // avoid undefined
 // const engineeringCopyThis =  {name: "CopyDepartment", describe : engineering.describe}
 // engineeringCopyThis.describe()
-engineering.addEmployee(1);
-engineering.addEmployee(2);
-engineering.addEmployee(3);
-engineering.allEmployees();
-console.log(engineering.departmentSize());
+// engineering.addEmployee(1)
+// engineering.addEmployee(2)
+// engineering.addEmployee(3)
+// engineering.allEmployees()
+// console.log(engineering.departmentSize()) 
 // class DepartmentShortCut  {
 //     describe(){
 //         console.log(`Department: ${this.name}: ${this.departmentId}`)
@@ -69,9 +86,9 @@ var FinanceDepartment = /** @class */ (function (_super) {
 }(Department));
 var financeDepartment = new FinanceDepartment("Finance", 2);
 financeDepartment.generateReport();
-var ITDepartment = /** @class */ (function (_super) {
-    __extends(ITDepartment, _super);
-    function ITDepartment(name, admins) {
+var ITDepartment2 = /** @class */ (function (_super) {
+    __extends(ITDepartment2, _super);
+    function ITDepartment2(name, admins) {
         var _this = _super.call(this, name) || this;
         _this.admins = admins;
         // from db 
@@ -79,7 +96,10 @@ var ITDepartment = /** @class */ (function (_super) {
         _this.admins = admins;
         return _this;
     }
-    Object.defineProperty(ITDepartment.prototype, "registerDevice", {
+    ITDepartment2.prototype.describe = function () {
+        console.log("Department2 IT");
+    };
+    Object.defineProperty(ITDepartment2.prototype, "registerDevice", {
         set: function (id) {
             console.log("Register device...");
             if (id < 0) {
@@ -90,34 +110,34 @@ var ITDepartment = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(ITDepartment.prototype, "findAdmins", {
+    Object.defineProperty(ITDepartment2.prototype, "findAdmins", {
         get: function () {
             return this.admins;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(ITDepartment.prototype, "findDevices", {
+    Object.defineProperty(ITDepartment2.prototype, "findDevices", {
         get: function () {
             return this.devices;
         },
         enumerable: false,
         configurable: true
     });
-    ITDepartment.prototype.addAdmins = function (name) {
+    ITDepartment2.prototype.addAdmins = function (name) {
         this.admins.push(name);
     };
-    ITDepartment.getDepartmentBudget = function (staffAmt) {
-        return ITDepartment.salary * staffAmt;
+    ITDepartment2.getDepartmentBudget = function (staffAmt) {
+        return ITDepartment2.salary * staffAmt;
     };
-    ITDepartment.salary = 1000;
-    return ITDepartment;
+    ITDepartment2.salary = 1000;
+    return ITDepartment2;
 }(Department));
-var itDepartment = new ITDepartment("IT", ["admin1", "admin2"]);
+var itDepartment = new ITDepartment2("IT", ["admin1", "admin2"]);
 itDepartment.addAdmins("admin3");
 console.log(itDepartment.findAdmins);
 itDepartment.registerDevice = 1;
 itDepartment.registerDevice = 4;
 console.log(itDepartment.findDevices);
-console.log("Finance budget: " + ITDepartment.getDepartmentBudget(itDepartment.findAdmins.length));
+// console.log("Finance budget: "+ ITDepartment.getDepartmentBudget(itDepartment.findAdmins.length))
 financeDepartment.describe();
